@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build:ui": "rm -rf build && cd ../../fullstackopen2021/part2/phonebook/ && yarn build && cp -r build ../../../fso21-part3/phonebook-backend/",
+    "deploy": "git push heroku master",
+    "logs:prod": "heroku logs --tail"
   },
   "repository": {
     "type": "git",
