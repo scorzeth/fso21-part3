@@ -61,7 +61,7 @@ app.get('/info', (request, response) => {
   response.send(`Phonebook has ${persons.length} entries<br /><br />${new Date()}`)
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
     .then(result => {
       response.status(204).end()
@@ -82,11 +82,6 @@ app.post('/api/persons', (request, response) => {
       error: 'number is missing'
     })
   }
-  if (persons.find(person => person.name === body.name)) {
-    return response.status(400).json({
-      error: 'name must be unique'
-    })
-  }
 
   const person = new Person({
     name: body.name,
@@ -97,6 +92,24 @@ app.post('/api/persons', (request, response) => {
     response.json(savedPerson)
   })
 })
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
+
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+
+  next(error)
+}
+
+app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
