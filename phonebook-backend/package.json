@@ -9,7 +9,8 @@
     "dev": "nodemon index.js",
     "build:ui": "rm -rf build && cd ../../fullstackopen2021/part2/phonebook/ && yarn build && cp -r build ../../../fso21-part3/phonebook-backend/",
     "deploy": "git push heroku master",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^8.0.0",
     "nodemon": "^2.0.13"
   }
 }

@@ -18,11 +18,11 @@ if (process.argv.length >= 5) {
   const number = process.argv[4]
 
   const person = new Person({
-      name: name,
-      number: number
+    name: name,
+    number: number
   })
 
-  person.save().then(result => {
+  person.save().then(() => {
     console.log(`added ${name} number ${number} to phonebook`)
     mongoose.connection.close()
   })
